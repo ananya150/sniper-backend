@@ -1,9 +1,18 @@
-import { Router, Request, Response } from 'express';
+import express, { Express, Request, Response } from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
-const router = Router();
+import tokenRoute from './routes/tokens';
 
-router.get('/api', (req: Request, res: Response) => {
-  res.send('Hello from HTTP endpoint!');
+export const app: Express = express();
+app.use(
+  cors()
+);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.get('/', (req: Request, res: Response) => {
+  res.send('Hello World!');
 });
 
-export default router;
+app.use('/token' , tokenRoute);
